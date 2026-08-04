@@ -1,5 +1,6 @@
-.subtitle {
-  margin: 0 0 24px;
+h1 {
+  text-align: center;
+  margin-bottom: 24px;
 }
 
 .panel {
@@ -7,44 +8,7 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px;
-  margin-bottom: 16px;
-}
-
-.tracker-add {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.tracker-add input {
-  flex: 1;
-}
-
-.tracker-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.tracker-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.tracker-name {
-  flex: 1;
-  color: var(--text-h);
-}
-
-.tracker-score {
-  font-family: var(--mono);
-  min-width: 3ch;
-  text-align: right;
-  color: var(--text-h);
+  margin-bottom: 20px;
 }
 
 .empty {
@@ -52,6 +16,116 @@
   font-style: italic;
 }
 
-.footnote {
+/* Start screen ------------------------------------------------------------ */
+
+.scores {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.score-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+
+.score-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.score-value {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-h);
+  min-width: 3ch;
+}
+
+.score-when {
   font-size: 14px;
+}
+
+.start {
+  display: block;
+  width: 100%;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 16px;
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.start:hover {
+  filter: brightness(1.1);
+}
+
+.clear {
+  font-size: 14px;
+  padding: 4px 10px;
+}
+
+/* Game ------------------------------------------------------------------- */
+
+.scoreline {
+  text-align: center;
+  font-size: 16px;
+}
+
+.scoreline-value {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin-left: 6px;
+}
+
+.word {
+  font-size: clamp(40px, 11vw, 88px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-h);
+  text-align: center;
+  /* Fixed height so the buttons don't shift when the word length changes. */
+  min-height: 2.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0 32px;
+}
+
+.answers {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.answer {
+  flex: 1;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 24px 12px;
+}
+
+.correct:hover {
+  border-color: #16a34a;
+  color: #16a34a;
+}
+
+.incorrect:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+.end {
+  display: block;
+  margin: 0 auto;
 }
