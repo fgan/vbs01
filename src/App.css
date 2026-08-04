@@ -1,3 +1,19 @@
+/* Flash color per word. Darker in light mode, lighter in dark, so each stays
+   legible against the page at large type. */
+:root {
+  --word-shamrock: #15803d;
+  --word-vikings: #9333ea;
+  --word-riverdance: #dc2626;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --word-shamrock: #4ade80;
+    --word-vikings: #c084fc;
+    --word-riverdance: #f87171;
+  }
+}
+
 h1 {
   text-align: center;
   margin-bottom: 24px;
@@ -103,19 +119,34 @@ h1 {
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--text-h);
+  /* Overridden per word below; falls back to a plain fade if a word ever
+     ships without a color. */
+  --flash: var(--text-h);
   /* Replays on every answer, so a reroll to the same word still reads as a
      new prompt rather than a dead button. */
   animation: word-in 340ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+.word-shamrock {
+  --flash: var(--word-shamrock);
+}
+
+.word-vikings {
+  --flash: var(--word-vikings);
+}
+
+.word-riverdance {
+  --flash: var(--word-riverdance);
 }
 
 @keyframes word-in {
   from {
     opacity: 0;
     transform: scale(0.55) rotate(-4deg);
-    color: var(--accent);
+    color: var(--flash);
   }
   60% {
-    color: var(--accent);
+    color: var(--flash);
   }
   to {
     opacity: 1;
@@ -132,7 +163,7 @@ h1 {
 
   @keyframes word-flash {
     from {
-      color: var(--accent);
+      color: var(--flash);
     }
     to {
       color: var(--text-h);

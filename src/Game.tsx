@@ -27,7 +27,10 @@ export function Game({ onEnd }: GameProps) {
 
       {/* aria-live sits on the stable wrapper; the keyed child is what remounts. */}
       <div className="word" aria-live="polite">
-        <span key={round} className="word-text">
+        <span
+          key={round}
+          className={`word-text word-${word.toLowerCase()}`}
+        >
           {word}
         </span>
       </div>
