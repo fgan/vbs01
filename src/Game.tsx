@@ -1,13 +1,32 @@
 import { useState } from 'react'
-import { nextWord, randomWord, type Word } from './words'
+import {
+  emptyCounts,
+  nextWord,
+  randomWord,
+  type Word,
+  type WordCounts,
+} from './words'
 
 type GameProps = {
   onEnd: (score: number) => void
 }
 
+/** The displayed word plus the session's display tally that biases the reroll. */
+type Prompt = {
+  word: Word
+  counts: WordCounts
+}
+
+function openingPrompt(): Prompt {
+  const word = randomWord()
+  const counts = emptyCounts()
+  counts[word] = 1
+  return { word, counts }
+}
+
 export function Game({ onEnd }: GameProps) {
   const [score, setScore] = useState(0)
-  const [word, setWord] = useState<Word>(randomWord)
+  const [prompt, setPrompt] = useState<Prompt>(openingPrompt)
   // Increments on every answer, including ones that reroll the same word. Used
   // as the word's key so React remounts it and the animation always replays.
   const [round, setRound] = useState(0)
@@ -15,7 +34,12 @@ export function Game({ onEnd }: GameProps) {
   // Both answers advance the word; only Correct scores.
   const answer = (correct: boolean) => {
     if (correct) setScore(score + 1)
-    setWord(nextWord(word))
+    setPrompt((current) => {
+      const word = nextWord(current.word, current.counts)
+      const counts = { ...current.counts }
+      counts[word] += 1
+      return { word, counts }
+    })
     setRound(round + 1)
   }
 
@@ -29,9 +53,9 @@ export function Game({ onEnd }: GameProps) {
       <div className="word" aria-live="polite">
         <span
           key={round}
-          className={`word-text word-${word.toLowerCase()}`}
+          className={`word-text word-${prompt.word.toLowerCase()}`}
         >
-          {word}
+          {prompt.word}
         </span>
       </div>
 
